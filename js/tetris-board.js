@@ -1,6 +1,6 @@
-var GameBoard = function(mainDisplayId, rowCount, columnCount, cellWidth, cellHeight) {
-	this.init = function(mainDisplayId, rowCount, columnCount, cellWidth, cellHeight) {
-		this.mainDisplayId = mainDisplayId;
+var GameBoard = function($mainDisplay, rowCount, columnCount, cellWidth, cellHeight) {
+	this.init = function($mainDisplay, rowCount, columnCount, cellWidth, cellHeight) {
+		this.$board = $mainDisplay.find("> .board");
 		this.rowCount = rowCount;
 		this.columnCount = columnCount;
 		this.cellWidth = cellWidth;
@@ -9,21 +9,24 @@ var GameBoard = function(mainDisplayId, rowCount, columnCount, cellWidth, cellHe
 	};
 
 	this.create = function() {
-		$("#" + this.mainDisplayId + " .board").css({
+		this.$board.css({
 			width: (this.cellWidth + 2) * this.columnCount,
 			height: (this.cellHeight + 2) * this.rowCount
 		});
 
 		for (var columnIndex = 1; columnIndex <= this.columnCount; columnIndex++) {
 			for (var rowIndex = 1; rowIndex <= this.rowCount; rowIndex++) {
-				$("#" + this.mainDisplayId + " .board").append("<div id='" + this.getCellId(columnIndex, rowIndex) + "' class='unoccupied_cell'></div>");
-				$("#" + this.getCellId(columnIndex, rowIndex)).css({
-					width: this.cellWidth + "px",
-					height: this.cellHeight + "px",
-					position: "absolute",
-					left: (columnIndex - 1) * (this.cellWidth + 2), 
-					top: (rowIndex - 1) * (this.cellHeight + 2)
-				});
+				var $cell = $(`<div class="unoccupied_cell"></div>`);
+				$cell
+					.attr("address", this.getCellId(columnIndex, rowIndex))
+					.css({
+						width: this.cellWidth + "px",
+						height: this.cellHeight + "px",
+						position: "absolute",
+						left: (columnIndex - 1) * (this.cellWidth + 2), 
+						top: (rowIndex - 1) * (this.cellHeight + 2)
+					});
+				this.$board.append($cell);
 			}
 		}
 	};
@@ -37,7 +40,7 @@ var GameBoard = function(mainDisplayId, rowCount, columnCount, cellWidth, cellHe
 	};
 
 	this.setCellStyle = function(col, row, className) {
-		$("#" + this.getCellId(col, row)).attr("class", className);
+		this.$board.find(`[address=${this.getCellId(col, row)}]`).attr("class", className);
 	};
 
 	this.resetCell = function(col, row) {
@@ -48,5 +51,5 @@ var GameBoard = function(mainDisplayId, rowCount, columnCount, cellWidth, cellHe
 		return "col" + col + "_row" + row;
 	};
 
-	this.init(mainDisplayId, rowCount, columnCount, cellWidth, cellHeight);
+	this.init($mainDisplay, rowCount, columnCount, cellWidth, cellHeight);
 };

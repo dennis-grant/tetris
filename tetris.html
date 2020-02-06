@@ -4,7 +4,7 @@
 <head>
 <title>tetris</title>
 
-<style type="text/css"/>
+<style type="text/css">
 <!--
 @import url("css/tetris.css");
 -->
@@ -18,20 +18,20 @@
 var game;
 
 $(window).ready(function() {
-	game = new Tetris("mainDisplay");
+	game = new Tetris($(".tetris"));
 });
 </script>
 </head>
 <body>
 
-<div id="mainDisplay">
+<div class="tetris">
 
 	<div class="board"></div>
 
 	<div class="buttonsPanel">
-		<button id="btnStart">Start</button>
-		<button id="btnPause">Pause</button>
-		<button id="btnRestart">Restart</button>
+		<button class="btnStart">Start</button>
+		<button class="btnPause">Pause</button>
+		<button class="btnRestart">Restart</button>
 	</div>
 
 	<div class="scorePanel">

@@ -1,4 +1,4 @@
-var Tetris = function(mainDisplayId) {
+var Tetris = function($mainDisplay) {
 	var COLUMN_COUNT		= 10;
 	var ROW_COUNT			= 18;
 	var CELL_WIDTH			= 22;
@@ -17,43 +17,46 @@ var Tetris = function(mainDisplayId) {
 		"rc:4" : 320
 	};
 
-	this.init = function(mainDisplayId) {
-		this.mainDisplayId = mainDisplayId;
-		$("#" + this.mainDisplayId).css({
+	this.init = function($mainDisplay) {
+		this.$score = $mainDisplay.find("> .scorePanel > .score");
+		this.$btnStart = $mainDisplay.find("> .buttonsPanel > .btnStart");
+		this.$btnPause = $mainDisplay.find("> .buttonsPanel > .btnPause");
+		this.$btnRestart = $mainDisplay.find("> .buttonsPanel > .btnRestart");
+		$mainDisplay.css({
 			width: (CELL_WIDTH + 2) * COLUMN_COUNT + 100
 		});
 		this.runningIntervalId = undefined;
 		this.isRunning = false;
 		this.score = 0;
-		this.board = new GameBoard(mainDisplayId, ROW_COUNT, COLUMN_COUNT, CELL_WIDTH, CELL_HEIGHT);
+		this.board = new GameBoard($mainDisplay, ROW_COUNT, COLUMN_COUNT, CELL_WIDTH, CELL_HEIGHT);
 		this.landedShape = new TetrisShape(this.board, [], -1, "");
 		this.createShapes();
 		this.setupEventHandlers();
 	};
 
 	this.setupEventHandlers = function() {
-		$("#btnStart").bind("click", $.proxy(this.btnStartClicked, this));
-		$("#btnPause").bind("click", $.proxy(this.btnPauseClicked, this));
-		$("#btnRestart").bind("click", $.proxy(this.btnRestartClicked, this));
+		this.$btnStart.bind("click", $.proxy(this.btnStartClicked, this));
+		this.$btnPause.bind("click", $.proxy(this.btnPauseClicked, this));
+		this.$btnRestart.bind("click", $.proxy(this.btnRestartClicked, this));
 		$(document).bind("keyup", $.proxy(this.handleKeyboardInput, this));
 	};
 
 	this.btnStartClicked = function(e) {
 		this.start();
-		$("#btnStart").hide();
-		$("#btnPause").show();
+		this.$btnStart.hide();
+		this.$btnPause.show();
 	};
 
 	this.btnPauseClicked = function(e) {
 		this.stop();
-		$("#btnPause").hide();
-		$("#btnRestart").show();
+		this.$btnPause.hide();
+		this.$btnRestart.show();
 	};
 
 	this.btnRestartClicked = function(e) {
 		this.go();
-		$("#btnRestart").hide();
-		$("#btnPause").show();
+		this.$btnRestart.hide();
+		this.$btnPause.show();
 	};
 
 	this.handleKeyboardInput = function(e) {
@@ -179,7 +182,7 @@ var Tetris = function(mainDisplayId) {
 	};
 
 	this.showScore = function() {
-		$("#" + this.mainDisplayId + " .score").html(this.score);
+		this.$score.html(this.score);
 	};
 
 	this.playNextShape = function() {
@@ -192,8 +195,8 @@ var Tetris = function(mainDisplayId) {
 			this.go();
 		}
 		else {
-			$("#btnPause").hide();
-			$("#btnStart").show();
+			this.$btnPause.hide();
+			this.$btnStart.show();
 			alert("Game Over!");
 		}
 	};
@@ -223,5 +226,5 @@ var Tetris = function(mainDisplayId) {
 		return Math.floor(Math.random() * (highestPosition + 1));
 	};
 
-	this.init(mainDisplayId);
+	this.init($mainDisplay);
 };

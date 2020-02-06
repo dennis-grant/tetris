@@ -1,76 +1,77 @@
-#mainDisplay {
+.tetris {
 	position: absolute;
 	left: 500px;
 }
 
-#mainDisplay .board {
+.tetris > .board {
 	border: solid 10px #600000;
 	position: absolute;
 }
 
-#mainDisplay .buttonsPanel {
+.tetris > .buttonsPanel {
 	position: absolute;
 	right: 0px;
 }
 
-#btnPause, #btnRestart {
+.tetris > .buttonsPanel > .btnPause,
+.tetris > .buttonsPanel > .btnRestart {
 	display: none;
 }
 
-#mainDisplay .scorePanel {
+.tetris > .scorePanel {
 	position: absolute;
 	right: 0px;
 	margin-top: 40px;
 }
 
-#mainDisplay .score-title {
+.tetris > .scorePanel > .score-title {
 	font-weight: bold;
 	font-size: 24px;
 	color: #600000;
 }
 
-#mainDisplay .score {
+.tetris > .scorePanel > .score {
 	color: #600000;
 	font-weight: bold;
 	font-size: 24px;
 }
 
-.unoccupied_cell {
+.tetris .unoccupied_cell {
 	border: solid 1px white;
 	background-color: white;
 }
 
-.red_piece {
+.tetris .red_piece {
 	background-color: #b00000;
 	border: solid 1px #555555;
 }
 
-.green_piece {
+.tetris .green_piece {
 	background-color: #336633;
 	border: solid 1px #555555;
 }
 
-.blue_piece {
+.tetris .blue_piece {
 	background-color: #3399ff;
 	border: solid 1px #555555;
 }
 
-.yellow_piece {
+.tetris .yellow_piece {
 	background-color: #ffcc00;
 	border: solid 1px #555555;
 }
 
-.grey_piece {
+.tetris .grey_piece {
 	background-color: #909090;
 	border: solid 1px #555555;
 }
 
-.purple_piece {
+.tetris .purple_piece {
 	background-color: #993399;
 	border: solid 1px #555555;
 }
 
-.dark_green_piece {
+.tetris .dark_green_piece {
 	background-color: #333333;
 	border: solid 1px #555555;
 }
